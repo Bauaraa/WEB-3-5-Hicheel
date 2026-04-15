@@ -7,10 +7,11 @@ import React from "react";
 // import Service from "./Service";
 // import Price from "./Price";
 // import Footer from "./Footer";
-import Header from "./Header";
-import Banner from "./Banner";
-import WhyUs from "./WhyUs";
-import Footer1 from "./Footer1";
+// import Header from "./Header";
+// import Banner from "./Banner";
+// import WhyUs from "./WhyUs";
+// import Footer1 from "./Footer1";
+import RestaurantPage from "./dasgalb/pages/RestaurantPage";
 
 const Web1 = () => {
   return (
@@ -23,10 +24,11 @@ const Web1 = () => {
       <Price />
       <Service />
       <Footer /> */}
-      <Header />
+      {/* <Header />
       <Banner />
       <WhyUs />
-      <Footer1 />
+      <Footer1 /> */}
+      <RestaurantPage.jsx />
     </div>
   );
 };
