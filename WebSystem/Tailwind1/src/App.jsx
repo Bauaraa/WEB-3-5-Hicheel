@@ -6,7 +6,8 @@ function App() {
   return (
     <>
       <div>
-        <Web1 />
+      {/* // <Web1 /> */}
+      <RestaurantPage/>
       </div>
     </>
   );

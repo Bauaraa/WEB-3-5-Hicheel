@@ -32,7 +32,9 @@ const Footer1 = () => {
         </div>
       )}
             </div>
-            <div>&#169;Bauaraa</div>
+            <div className="text-center text-sm mt-4">
+              &#169;Bauaraa. All rights reserved.
+            </div>
         </div>
     );
 };
