@@ -6,7 +6,7 @@ const Navbar = ({ openBooking, openLogin, openOrders }) => {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="w-full bg-sky-100 shadow-sm">
+        <div className="w-full bg-amber-50 shadow-sm">
             <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-orange-600">FoodHouse</h1>
 
