@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { navLinks } from "../data/data";
 
-const Navbar = () => {
+const Navbar = ({ openBooking, openLogin, openOrders }) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -18,9 +18,17 @@ const Navbar = () => {
                     ))}
                 </div>
 
-                <button className="hidden md:block bg-orange-600 text-white px-4 py-2 rounded-lg">
+                <div className="flex justify-between gap-2.5">
+                <button onClick={openOrders} className="hidden md:block bg-orange-50 border-amber-500 text-orange-400 px-4 py-2 rounded-lg">
+                    My Orders
+                </button>
+                <button onClick={openBooking} className="hidden md:block bg-orange-600 text-white px-4 py-2 rounded-lg">
                     Book Table
                 </button>
+                <button onClick={openLogin} className="hidden md:block px-4 py-2 bg-orange-50 border-amber-500 text-orange-400 rounded-lg">
+                    Login
+                </button>
+                </div>
 
                 <div className="md:hidden">
                     {open ? (
@@ -33,7 +41,7 @@ const Navbar = () => {
 
             {open && (
                 <div className="md:hidden px-4 pb-4 flex flex-col gap-3">
-                    {navItems.map((item, index) => (
+                    {navLinks.map((item, index) => (
                         <a key={index} href={item.href} className="text-gray-700">
                             {item.name}
                         </a>

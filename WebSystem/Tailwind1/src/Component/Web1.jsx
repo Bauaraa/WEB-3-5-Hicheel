@@ -11,7 +11,7 @@ import React from "react";
 // import Banner from "./Banner";
 // import WhyUs from "./WhyUs";
 // import Footer1 from "./Footer1";
-import RestaurantPage from "./dasgalb/pages/RestaurantPage";
+// import RestaurantPage from "./dasgalb/pages/RestaurantPage";
 
 const Web1 = () => {
   return (
@@ -28,7 +28,7 @@ const Web1 = () => {
       <Banner />
       <WhyUs />
       <Footer1 /> */}
-      <RestaurantPage.jsx />
+      {/* <RestaurantPage.jsx /> */}
     </div>
   );
 };
