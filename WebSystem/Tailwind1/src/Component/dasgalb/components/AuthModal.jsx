@@ -28,11 +28,7 @@ const AuthModal = ({ open, close, mode, switchMode }) => {
               <span className="mb-2 block text-sm font-semibold text-gray-700">
                 {field.label}
               </span>
-              <input
-                className="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-indigo-500"
-                type={field.type}
-                placeholder={field.placeholder}
-              />
+              <input className="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-indigo-500" type={field.type} placeholder={field.placeholder} />
             </label>
           ))}
           <button type="button" className="w-full rounded-2xl bg-orange-600 px-4 py-3 text-white transition hover:bg-orange-700">
@@ -41,10 +37,7 @@ const AuthModal = ({ open, close, mode, switchMode }) => {
         </form>
         <p className="mt-5 text-center text-sm text-gray-600">
           {authtext.secondaryText}
-          <button
-            onClick={switchMode}
-            className="ml-4 font-semibold text-orange-600 hover:text-orange-700"
-          >
+          <button onClick={switchMode} className="ml-4 font-semibold text-orange-600 hover:text-orange-700">
             {authtext.secondaryAction}
           </button>
         </p>

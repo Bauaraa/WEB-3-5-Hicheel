@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ShowCase from '../assets/ShowCaseImage.avif'
-import { menuDetails } from '../data/data.jsx'
+import { menuDetails, dishes } from '../data/data.jsx'
 
-const Showcase = () => {
+const Showcase = ({ orders, addOrder }) => {
     const [showMenu, setShowMenu] = useState(false);
     return (
     <div>
@@ -36,22 +36,39 @@ const Showcase = () => {
           This demo menu overview gives costumers a quick look at the restaraunt's featured meals before ordering.
         </p>
           <div className="grid md:grid-cols-3 gap-6">
-            {menuDetails.map(item => (
-              <div key={item.id} className="bg-orange-50 p-6 rounded-lg shadow-md">
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-xl font-semibold text-gray-900">{item.name}</h3>
-                  <p className="text-lg font-bold text-orange-600">{item.price}</p>
+            {menuDetails.map(item => {
+              const dish = dishes.find((dishItem) => dishItem.name === item.name) || {
+                name: item.name,
+                price: item.price,
+                description: item.description,
+              };
+              const alreadyAdded = orders?.some((order) => order.dish?.name === dish.name || order.name === dish.name);
+
+              return (
+                <div key={item.id} className="bg-orange-50 p-6 rounded-lg shadow-md">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-xl font-semibold text-gray-900">{item.name}</h3>
+                    <p className="text-lg font-bold text-orange-600">{item.price}</p>
+                  </div>
+                  <p className="text-gray-600 mb-2">{item.description}</p>
+                  <p className="text-sm text-gray-500">Serves: {item.serving}</p>
+                  <p className="text-sm text-gray-500">Prep Time: {item.prepTime}</p>
+                  <ul className="text-sm text-gray-500 mt-2">
+                    {item.extras.map((extra, index) => (
+                      <li key={index}>• {extra}</li>
+                    ))}
+                  </ul>
+                  <button
+                    type="button"
+                    onClick={() => addOrder?.(dish)}
+                    disabled={alreadyAdded}
+                    className={`mt-4 w-full rounded-3xl px-4 py-3 text-sm font-semibold text-white transition ${alreadyAdded ? "bg-slate-300 text-slate-600" : "bg-orange-500 hover:bg-orange-600"}`}
+                  >
+                    {alreadyAdded ? "Added" : "Add to My Orders"}
+                  </button>
                 </div>
-                <p className="text-gray-600 mb-2">{item.description}</p>
-                <p className="text-sm text-gray-500">Serves: {item.serving}</p>
-                <p className="text-sm text-gray-500">Prep Time: {item.prepTime}</p>
-                <ul className="text-sm text-gray-500 mt-2">
-                  {item.extras.map((extra, index) => (
-                    <li key={index}>• {extra}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
