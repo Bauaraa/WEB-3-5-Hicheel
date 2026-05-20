@@ -104,6 +104,13 @@ export const chefInfo = {
     description:
         "Our chef creates delicious dishes with fresh ingredients and a passion for quality food every day.",
     image: chefInfo1,
+    story:
+        "Chef Elena leads the kitchen with a simple idea: every plate should feel warm, balanced, and memorable. Her menus focus on fresh produce, thoughtful preparation, and comfort without losing elegance.",
+    philosophy: [
+        "Cook with fresh seasonal ingredients whenever possible",
+        "Keep flavors clean so each ingredient stands out",
+        "Create dishes that feel welcoming, not complicated",
+    ],
 };
 
 export const footerLinks = ["Menu", "Gallery", "Booking", "Location"];
