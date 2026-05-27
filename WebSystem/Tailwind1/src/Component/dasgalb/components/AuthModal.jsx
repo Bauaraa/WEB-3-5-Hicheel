@@ -1,6 +1,6 @@
 import React from "react";
 import { authContent } from "../data/data";
-const AuthModal = ({ open, close, mode, switchMode }) => {
+const AuthModal = ({ open, close, mode, switchMode, onLoginSuccess }) => {
   const authtext = authContent[mode];
   if (!open || !authtext) {
     return null;
@@ -31,7 +31,7 @@ const AuthModal = ({ open, close, mode, switchMode }) => {
               <input className="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-indigo-500" type={field.type} placeholder={field.placeholder} />
             </label>
           ))}
-          <button type="button" className="w-full rounded-2xl bg-orange-600 px-4 py-3 text-white transition hover:bg-orange-700">
+          <button type="button" onClick={() => { if (mode === "login") { onLoginSuccess?.(); }}} className="w-full rounded-2xl bg-orange-600 px-4 py-3 text-white transition hover:bg-orange-700">
             {authtext.primaryLabel}
           </button>
         </form>

@@ -15,6 +15,8 @@ const RestaurantPage = () => {
     const [authMode, setAuthMode] = useState("booking");
     const [ordersOpen, setOrdersOpen] = useState(false);
     const [orders, setOrders] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [pendingDish, setPendingDish] = useState(null);
 
     const addOrder = (dish) => {
         setOrders((prevOrders) => [
@@ -28,6 +30,16 @@ const RestaurantPage = () => {
                 dish,
             },
         ]);
+    };
+
+    const attemptAddOrder = (dish) => {
+        if (!isAuthenticated) {
+            setAuthMode("login");
+            setPendingDish(dish);
+            setAuthOpen(true);
+            return;
+        }
+        addOrder(dish);
     };
 
     const removeOrder = (orderId) => {
@@ -48,16 +60,25 @@ const RestaurantPage = () => {
         setOrdersOpen(true);
     };
 
+    const handleAuthSuccess = () => {
+        setIsAuthenticated(true);
+        setAuthOpen(false);
+        if (pendingDish) {
+            addOrder(pendingDish);
+            setPendingDish(null);
+        }
+    };
+
     console.log(isOpen);
 
     return (
         <div>
             <Navbar openBooking={openBooking} openLogin={openLogin} openOrders={openOrders} />
             <MenuIntroModal state={isOpen} close={() => setIsOpen(false)} />
-            <Showcase state={isOpen} close={() => setIsOpen(false)} orders={orders} addOrder={addOrder} />
-            <AuthModal mode={authMode} open={authOpen} close={() => setAuthOpen(false)} switchMode={() => setAuthMode((currentMode) => currentMode === "login" ? "booking" : "login")} />
+            <Showcase state={isOpen} close={() => setIsOpen(false)} orders={orders} addOrder={attemptAddOrder} />
+            <AuthModal mode={authMode} open={authOpen} close={() => setAuthOpen(false)} switchMode={() => setAuthMode((currentMode) => currentMode === "login" ? "booking" : "login")} onLoginSuccess={handleAuthSuccess}/>
             <MenuSection open={openBooking} />
-            <PlacedOrders open={ordersOpen} close={() => setOrdersOpen(false)} orders={orders} addOrder={addOrder} removeOrder={removeOrder} />
+            <PlacedOrders open={ordersOpen} close={() => setOrdersOpen(false)} orders={orders} addOrder={attemptAddOrder} removeOrder={removeOrder} />
             <ChefSection />
             <Footer />
         </div>
