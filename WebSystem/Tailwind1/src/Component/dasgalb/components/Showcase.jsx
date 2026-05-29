@@ -58,12 +58,7 @@ const Showcase = ({ orders, addOrder }) => {
                       <li key={index}>• {extra}</li>
                     ))}
                   </ul>
-                  <button
-                    type="button"
-                    onClick={() => addOrder?.(dish)}
-                    disabled={alreadyAdded}
-                    className={`mt-4 w-full rounded-3xl px-4 py-3 text-sm font-semibold text-white transition ${alreadyAdded ? "bg-slate-300 text-slate-600" : "bg-orange-500 hover:bg-orange-600"}`}
-                  >
+                  <button type="button" onClick={() => addOrder?.(dish)} disabled={alreadyAdded} className={`mt-4 w-full rounded-3xl px-4 py-3 text-sm font-semibold text-white transition ${alreadyAdded ? "bg-slate-300 text-slate-600" : "bg-orange-500 hover:bg-orange-600"}`}>
                     {alreadyAdded ? "Added" : "Add to My Orders"}
                   </button>
                 </div>

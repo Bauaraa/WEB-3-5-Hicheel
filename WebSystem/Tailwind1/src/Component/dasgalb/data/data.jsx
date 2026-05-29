@@ -79,6 +79,8 @@ export const authContent = {
         secondaryAction: "Login",
         fields: [
             { label: "Full Name", type: "text", placeholder: "Enter your full name" },
+            { label: "Email", type: "email", placeholder: "Enter your email" },
+            { label: "Password", type: "password", placeholder: "Create a password" },
             { label: "Phone Number", type: "tel", placeholder: "Enter your phone number" },
             { label: "Guests", type: "number", placeholder: "How many guests?" },
             { label: "Date", type: "date", placeholder: "" },

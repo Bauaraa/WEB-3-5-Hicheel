@@ -1,13 +1,50 @@
 import React, { useState } from "react";
 import { dishes } from "../data/data";
 
-const PlacedOrders = ({ open, close, orders, addOrder, removeOrder }) => {
+const PlacedOrders = ({ open, close, orders, addOrder, removeOrder, user, onUpdateUser }) => {
   const [addOpen, setAddOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editData, setEditData] = useState({});
 
   if (!open) return null;
 
   const handleAddOrder = (dish) => {
     addOrder?.(dish);
+  };
+
+  const handleEditClick = () => {
+    setEditData({
+      name: user?.name || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
+      guests: user?.guests || "",
+      date: user?.date || "",
+      password: user?.password || "",
+      favoriteDish: user?.favoriteDish || "",
+    });
+    setEditOpen(true);
+  };
+
+  const handleEditChange = (field, value) => {
+    setEditData({
+      ...editData,
+      [field]: value,
+    });
+  };
+
+  const handleSaveEdit = () => {
+    const updatedUser = {
+      ...user,
+      name: editData.name,
+      email: editData.email,
+      phone: editData.phone,
+      guests: editData.guests,
+      date: editData.date,
+      password: editData.password,
+      favoriteDish: editData.favoriteDish,
+    };
+    onUpdateUser?.(updatedUser);
+    setEditOpen(false);
   };
 
   return (
@@ -50,11 +87,111 @@ const PlacedOrders = ({ open, close, orders, addOrder, removeOrder }) => {
               </button>
             </div>
           )) : (
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-8 text-center text-slate-600 shadow-sm">
+            <div className="col-span-full flex items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 p-8 text-center text-slate-600 shadow-sm">
               No food added yet. Press the + Add Food button to add dishes to your order list.
             </div>
           )}
         </div>
+
+        {user && (
+          <div className="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase text-orange-600">Account Overview</p>
+                <h2 className="mt-2 text-2xl font-bold text-slate-900">{user.name}</h2>
+                <p className="mt-3 text-sm text-slate-600">Keep your reservation details and favorite order preferences together in one place.</p>
+              </div>
+              <button onClick={handleEditClick} className="rounded-2xl bg-orange-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-orange-700 whitespace-nowrap">
+                Edit Account
+              </button>
+            </div>
+            <div className="grid gap-4 md:grid-cols-4">
+              <div className="rounded-2xl bg-amber-50 p-4">
+                <p className="text-xs font-semibold uppercase text-orange-600">Email</p>
+                <p className="mt-2 text-sm font-medium text-slate-900">{user?.email}</p>
+              </div>
+              <div className="rounded-2xl bg-amber-50 p-4">
+                <p className="text-xs font-semibold uppercase text-orange-600">Phone</p>
+                <p className="mt-2 text-sm font-medium text-slate-900">{user?.phone}</p>
+              </div>
+              <div className="rounded-2xl bg-amber-50 p-4">
+                <p className="text-xs font-semibold uppercase text-orange-600">Guests</p>
+                <p className="mt-2 text-sm font-medium text-slate-900">{user?.guests}</p>
+              </div>
+              <div className="rounded-2xl bg-amber-50 p-4">
+                <p className="text-xs font-semibold uppercase text-orange-600">Favorite Dish</p>
+                <p className="mt-2 text-sm font-medium text-slate-900">{user?.favoriteDish}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {editOpen && (
+          <div className="fixed inset-0 z-60 flex items-center justify-center bg-slate-900/90 px-4 py-8 overflow-y-auto">
+            <div className="w-full max-w-2xl rounded-4xl bg-white p-6 md:p-8 shadow-2xl my-8">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-sm font-semibold uppercase text-orange-600">Account</p>
+                  <h2 className="text-3xl font-bold text-slate-900">Update your dining profile</h2>
+                  <p className="mt-3 text-sm text-slate-600">Keep your reservation details and favorite order preferences together in one place.</p>
+                </div>
+                <button onClick={() => setEditOpen(false)} className="text-orange-600 font-semibold hover:text-orange-700 whitespace-nowrap">
+                  Close
+                </button>
+              </div>
+              <form className="space-y-6">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700">Full Name</span>
+                    <input
+                      type="text"
+                      value={editData.name || ""}
+                      onChange={(e) => handleEditChange("name", e.target.value)}
+                      className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-orange-500"
+                      placeholder="Full name"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700">Email</span>
+                    <input
+                      type="email"
+                      value={editData.email || ""}
+                      onChange={(e) => handleEditChange("email", e.target.value)}
+                      className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-orange-500"
+                      placeholder="Email"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700">Phone Number</span>
+                    <input
+                      type="tel"
+                      value={editData.phone || ""}
+                      onChange={(e) => handleEditChange("phone", e.target.value)}
+                      className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-orange-500"
+                      placeholder="Phone number"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700">Guests</span>
+                    <input type="number" value={editData.guests || ""} onChange={(e) => handleEditChange("guests", e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-orange-500" placeholder="Number of guests" />
+                  </label>
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700">Date</span>
+                    <input type="date" value={editData.date || ""} onChange={(e) => handleEditChange("date", e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-orange-500" />
+                  </label>
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700">Password</span>
+                    <input type="password" value={editData.password || ""} onChange={(e) => handleEditChange("password", e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-orange-500" placeholder="Password" />
+                  </label>
+                </div>
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Favorite Dish</span>
+                  <input type="text" value={editData.favoriteDish || ""} onChange={(e) => handleEditChange("favoriteDish", e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-orange-500" placeholder="Your favorite dish" />
+                </label>
+              </form>
+            </div>
+          </div>
+        )}
 
         <div className="mt-10">
           <h2 className="text-2xl font-semibold text-slate-900">Popular dishes</h2>

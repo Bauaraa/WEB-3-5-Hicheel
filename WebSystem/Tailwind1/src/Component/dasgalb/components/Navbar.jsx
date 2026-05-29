@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { navLinks } from "../data/data";
 
-const Navbar = ({ openBooking, openLogin, openOrders }) => {
+const Navbar = ({ openBooking, openLogin, openOrders, isLoggedIn = false, accountName = "", onLogout }) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -22,12 +22,25 @@ const Navbar = ({ openBooking, openLogin, openOrders }) => {
                 <button onClick={openOrders} className="hidden md:block bg-orange-50 border-amber-500 text-orange-400 px-4 py-2 rounded-lg">
                     My Orders
                 </button>
-                <button onClick={openBooking} className="hidden md:block bg-orange-600 text-white px-4 py-2 rounded-lg">
-                    Book Table
-                </button>
-                <button onClick={openLogin} className="hidden md:block px-4 py-2 bg-orange-50 border-amber-500 text-orange-400 rounded-lg">
-                    Login
-                </button>
+                {isLoggedIn ? (
+                    <>
+                        <span className="hidden md:block bg-orange-50 border-amber-600 text-orange-700 px-4 py-2 rounded-lg">
+                            {accountName}
+                        </span>
+                        <button onClick={onLogout} className="hidden md:block bg-orange-600 text-white px-4 py-2 rounded-lg">
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <button onClick={openBooking} className="hidden md:block bg-orange-600 text-white px-4 py-2 rounded-lg">
+                            Book Table
+                        </button>
+                        <button onClick={openLogin} className="hidden md:block px-4 py-2 bg-orange-50 border-amber-500 text-orange-400 rounded-lg">
+                            Login
+                        </button>
+                    </>
+                )}
                 </div>
 
                 <div className="md:hidden">
